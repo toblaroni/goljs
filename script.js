@@ -2,6 +2,7 @@ console.log(process.argv[2])
 
 const ALIVE = 0
 const DEAD = 1
+let width, height
 
 let pState = [[]]
 let cState = [[]]
@@ -12,6 +13,9 @@ function createGame(w, h) {
       w = 5
       h = 5
    }
+
+   width = w
+   height = h
 
    // Create empty arrays
    cState = [...Array(h)].map((e) => Array(w))
@@ -26,14 +30,98 @@ function createGame(w, h) {
       }
    }
 
-   console.log(cState)
+}
+
+function checkAbove(i, j) {
+   if (cState[i-1][j] == ALIVE)
+      return 1
+   return 0
+}
+
+function checkBelow(i, j) {
+   if (cState[i+1][j] == ALIVE)
+      return 1
+   return 0
+}
+
+function checkLeft(i, j) {
+   if (cState[i][j-1] == ALIVE)
+      return 1
+   return 0
+}
+
+function checkRight(i, j) {
+   if (cState[i][j+1] == ALIVE)
+      return 1
+   return 0
 }
 
 function updateGame() {
    // Set the pState to the cState
    pState = cState
+
+   // Loop through cells and update them according to their neighbors   
+   for (let i = 0; i < cState.length; i++) {
+      for (let j = 0; j < cState[0].length; j++) {
+         let c = checkNeighbours(i, j)
+
+      }
+   }
+}
+
+function checkNeighbours(i, j) {
+   let neighbors = 0
+   // Corners
+   if (i === 0 && j === 0) { // Top left
+      neighbors += checkRight(i, j)
+      neighbors += checkBelow(i, j)
+      return neighbors
+   } else if (i === 0 && j === width - 1 ) { // Top right
+      neighbors += checkLeft(i, j)
+      neighbors += checkBelow(i, j)
+      return neighbors
+   } else if (i === height - 1 && j === 0) { // Bottom left
+      neighbors += checkRight(i, j)
+      neighbors += checkAbove(i, j)
+      return neighbors
+   } else if (i === height - 1 && j === width - 1) { // Bottom Right
+      neighbors += checkLeft(i, j)
+      neighbors += checkAbove(i, j)
+      return neighbors
+   }
+
+   // Edges 
+   if (i === 0) {
+      neighbors += checkBelow(i, j)
+      neighbors += checkLeft(i, j)
+      neighbors += checkRight(i, j)
+      return neighbors
+   } else if (i === height-1) {
+      neighbors += checkAbove(i, j)
+      neighbors += checkLeft(i, j)
+      neighbors += checkRight(i, j)
+      return neighbors
+   } else if (j === 0) {
+      neighbors += checkAbove(i, j)
+      neighbors += checkBelow(i, j)
+      neighbors += checkRight(i, j)
+      return neighbors
+   } else if (j === width-1) {
+      neighbors += checkBelow(i, j)
+      neighbors += checkAbove(i, j)
+      neighbors += checkLeft(i, j)
+      return neighbors
+   }
+
+   // Check the rest
+   neighbors += checkAbove(i, j)
+   neighbors += checkBelow(i, j)
+   neighbors += checkLeft(i, j)
+   neighbors += checkRight(i, j)
+   return neighbors
+
 }
 
 createGame(5, 5)
-updateGame()
+setInterval(updateGame, 1000)
 
