@@ -1,4 +1,3 @@
-console.log(process.argv[2])
 
 const ALIVE = 0
 const DEAD = 1
@@ -24,9 +23,7 @@ function createGame(w, h) {
    // Populate the grid with random symbols
    for (let i = 0; i < h; i++) {
       for (let j = 0; j < w; j++) {
-         let r = Math.random()
-         if (r > 0.5) cState[i][j] = ALIVE
-         else cState[i][j] = DEAD
+         cState[i][j] = Math.floor(Math.random() * 2)
       }
    }
 
@@ -63,10 +60,17 @@ function updateGame() {
    // Loop through cells and update them according to their neighbors   
    for (let i = 0; i < cState.length; i++) {
       for (let j = 0; j < cState[0].length; j++) {
-         let c = checkNeighbours(i, j)
+         let neighbors = checkNeighbours(i, j)
+         if (neighbors === 3 && cState[i][j] === DEAD)
+            cState[i][j] = ALIVE
+         else if ((neighbors === 2 || neighbors === 3) && cState[i][j] === ALIVE)
+            continue
+         else 
+            cState[i][j] = DEAD
 
       }
    }
+   console.log(cState)
 }
 
 function checkNeighbours(i, j) {
@@ -121,6 +125,7 @@ function checkNeighbours(i, j) {
    return neighbors
 
 }
+console.log(process.argv[2], process.argv[3])
 
 createGame(5, 5)
 setInterval(updateGame, 1000)
