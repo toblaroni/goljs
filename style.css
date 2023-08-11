@@ -9,13 +9,35 @@ html, body {
 
 }
 
+.flex-container {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+}
+
 #main-container {
     line-height: 0;
     width: auto;
-    margin-left: auto;
-    margin-top: auto;
 }
 
-#stop-start {
-    margin-top: 10px;
+button {
+    padding: 10px;
+    background-color: lightblue;
+    border: none;
+    border-radius: 15px;
+}
+
+#btns {
+    background-color: white;
+    position: fixed;
+    top: 100%;
+    width: 100%;
+    height: auto;
+    transform: translate(0, -100%);
+    display: flex;
+    padding: 10px;
+    justify-content: space-evenly;
+    border-top: 1px solid black;
 }

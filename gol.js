@@ -18,7 +18,8 @@ export function createGame(w, h) {
       for (let j = 0; j < w; j++) 
          cState[i][j] = Math.floor(Math.random() * 2)
 
-   return [pState, cState]
+
+   return cState
 }
 
 // Gets passed the current state
