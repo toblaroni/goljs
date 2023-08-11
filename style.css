@@ -1,0 +1,21 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+
+}
+
+#main-container {
+    line-height: 0;
+    width: auto;
+    margin-left: auto;
+    margin-top: auto;
+}
+
+#stop-start {
+    margin-top: 10px;
+}
