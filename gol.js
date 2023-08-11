@@ -4,7 +4,7 @@ const DEAD = 1
 let width, height
 
 // Create a new game with command line arguments
-function createGame(w, h) {
+export function createGame(w, h) {
 
    width = w
    height = h
@@ -21,58 +21,10 @@ function createGame(w, h) {
    return [pState, cState]
 }
 
-function checkAbove(i, j, pState) {
-   if (pState[i-1][j] === ALIVE)
-      return 1
-   return 0
-}
-
-function checkBelow(i, j, pState) {
-   if (pState[i+1][j] === ALIVE)
-      return 1
-   return 0
-}
-
-function checkLeft(i, j, pState) {
-   if (pState[i][j-1] === ALIVE)
-      return 1
-   return 0
-}
-
-function checkRight(i, j, pState) {
-   if (pState[i][j+1] === ALIVE)
-      return 1
-   return 0
-}
-
-function checkTL(i, j, pState) {
-   if (pState[i-1][j-1] === ALIVE)
-      return 1
-   return 0
-}
-
-function checkTR(i, j, pState) {
-   if (pState[i-1][j+1] === ALIVE)
-      return 1
-   return 0
-}
-
-function checkBL(i, j, pState) {
-   if (pState[i+1][j-1] === ALIVE)
-      return 1
-   return 0
-}
-
-function checkBR(i, j, pState) {
-   if (pState[i+1][j+1] === ALIVE)
-      return 1
-   return 0
-}
-
-// Gets passed the previous state and current state
-function updateGame(pState, cState) {
+// Gets passed the current state
+export function updateGame(cState) {
    // Set the pState to the cState
-   pState = cState
+   let pState = deepCopy2DArray(cState);
 
    // Loop through cells and update them according to their neighbors   
    for (let i = 0; i < height; i++) {
@@ -92,10 +44,10 @@ function updateGame(pState, cState) {
       }
    }
    // console.log(cState)
-   return [pState, cState]
+   return cState;
 }
 
-function checkNeighbours(i, j, pState) {
+export function checkNeighbours(i, j, pState) {
    let neighbors = 0
    // Corners
    if (i === 0 && j === 0) { // Top left
@@ -169,7 +121,66 @@ function checkNeighbours(i, j, pState) {
    return neighbors
 }
 
-// [pState, cState] = createGame(5, 5)
-// setInterval(updateGame(pState, cState), 500)
 
-export {createGame, updateGame, checkNeighbours}
+function checkAbove(i, j, pState) {
+   if (pState[i-1][j] === ALIVE)
+      return 1
+   return 0
+}
+
+function checkBelow(i, j, pState) {
+   if (pState[i+1][j] === ALIVE)
+      return 1
+   return 0
+}
+
+function checkLeft(i, j, pState) {
+   if (pState[i][j-1] === ALIVE)
+      return 1
+   return 0
+}
+
+function checkRight(i, j, pState) {
+   if (pState[i][j+1] === ALIVE)
+      return 1
+   return 0
+}
+
+function checkTL(i, j, pState) {
+   if (pState[i-1][j-1] === ALIVE)
+      return 1
+   return 0
+}
+
+function checkTR(i, j, pState) {
+   if (pState[i-1][j+1] === ALIVE)
+      return 1
+   return 0
+}
+
+function checkBL(i, j, pState) {
+   if (pState[i+1][j-1] === ALIVE)
+      return 1
+   return 0
+}
+
+function checkBR(i, j, pState) {
+   if (pState[i+1][j+1] === ALIVE)
+      return 1
+   return 0
+}
+
+function deepCopy2DArray(arr) {
+   let copiedArr = [];
+
+   for (let i = 0; i < arr.length; i++) {
+      let copiedRow = [];
+      for (let j = 0; j < arr[i].length; j++) {
+         copiedRow.push(arr[i][j]);
+      }
+      copiedArr.push(copiedRow);
+   }
+
+   return copiedArr;
+}
+ 

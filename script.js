@@ -5,9 +5,9 @@ const togglePlayBtn = document.getElementById('stop-start')
 
 const ALIVE = 0;
 const DEAD = 1;
-const cols = 10;
+const cols = 4;
 const rows = cols;
-let [ pState, cState ] = createGame(cols, rows);
+let pState, cState;
 let isRunning = false;
 let golInterval;
 
@@ -42,6 +42,8 @@ function createCheckboxGrid() {
     const width = window.innerWidth;
     const height = window.innerHeight;
 
+    [pState, cState] = createGame(cols, rows)
+
     for (let i = 0; i < rows; i++) {
         for (let j = 0; j < cols; j++) {
             let checkbox = document.createElement('input')
@@ -59,7 +61,7 @@ function createCheckboxGrid() {
 
 function updateCheckboxGrid() {
     // Update the checkbox grid
-    [pState, cState] = updateGame(pState, cState);
+    cState = updateGame(cState);
     for (let i = 0; i < rows; i++) {
         for (let j = 0; j < cols; j++) {
             let cBox = document.querySelector(`input[type="checkbox"][i="${i}"][j="${j}"]`)
